@@ -7,6 +7,7 @@ namespace Entities.Configuration
 {
 	public class CompanyConfiguration : IEntityTypeConfiguration<Company>
 	{
+		
 		public void Configure(EntityTypeBuilder<Company> builder)
 		{
 			builder.HasData

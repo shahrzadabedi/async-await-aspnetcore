@@ -37,6 +37,7 @@ namespace CompanyEmployees.Controllers
 		}
 
 		[HttpGet("{id}", Name = "CompanyById")]
+	
 		public IActionResult GetCompany(Guid id)
 		{
 			var company = _repository.GetCompany(id);

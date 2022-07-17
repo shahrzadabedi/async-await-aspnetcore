@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CompanyEmployees.Filters;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace CompanyEmployees.Controllers
 {
+    //[ServiceFilter(typeof(LoggingFilterAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase

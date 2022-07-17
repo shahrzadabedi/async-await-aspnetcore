@@ -1,4 +1,5 @@
 using CompanyEmployees.Extensions;
+using CompanyEmployees.Filters;
 using Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,8 +28,9 @@ namespace CompanyEmployees
 			services.ConfigureSqlContext(Configuration);
 			services.ConfigureRepository();
 			services.AddAutoMapper(typeof(Startup));
-
-			services.AddControllers();
+			
+			services.AddControllers(config => { config.Filters.AddService(typeof(LoggingFilterAttribute)); });
+			services.AddScoped<LoggingFilterAttribute>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

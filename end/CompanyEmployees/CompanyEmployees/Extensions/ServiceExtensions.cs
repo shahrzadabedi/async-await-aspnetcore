@@ -21,7 +21,10 @@ namespace CompanyEmployees.Extensions
             opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("CompanyEmployees")));
             //.
         }
-        public static void ConfigureRepository(this IServiceCollection services) =>
-		   services.AddScoped<ICompanyRepository, CompanyRepository>();
+        public static void ConfigureRepository(this IServiceCollection services)
+        {
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+        }
 	}
 }

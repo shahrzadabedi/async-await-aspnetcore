@@ -10,11 +10,13 @@ namespace Entities.Models
     public class Employee
     {
         [Column("EmployeeId")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Column("Age")]
         public int Age { get; set; }
         [Column("CompanyId")]
-        public Guid CompanyId { get; set; }
+        [ForeignKey("Company")]
+        public Guid CompanyId { get; set; }       
+        public Company Company { get; set; }
         [Column("Name")]
         public string Name { get; set; }
         [Column("Position")]

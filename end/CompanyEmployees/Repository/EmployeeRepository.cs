@@ -17,7 +17,7 @@ namespace Repository
         {
             _repoContext = repoContext;
         }
-        public async Task CreateCompany(Employee employee)
+        public async Task CreateEmployee(Employee employee)
         {
             _repoContext.Add(employee);
             await _repoContext.SaveChangesAsync();
@@ -31,9 +31,9 @@ namespace Repository
         }
 
 
-        public async Task<Employee> GetEmployee(int employeeId) =>
+        public async Task<Employee> GetEmployee(Guid Id) =>
             await _repoContext.Employees
-                .SingleOrDefaultAsync(c => c.Id.Equals(employeeId));
+                .SingleOrDefaultAsync(c => c.Id.Equals(Id));
 
 
     }

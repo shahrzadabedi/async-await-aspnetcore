@@ -10,7 +10,7 @@ namespace Contracts
     public interface IEmployeeRepository
     {
         Task<IEnumerable<Employee>> GetAllEmployees();
-        Task<Employee> GetEmployee(int employeeId);
-        Task CreateCompany(Employee employee);
+        Task<Employee> GetEmployee(Guid Id);
+        Task CreateEmployee(Employee employee);
     }
 }

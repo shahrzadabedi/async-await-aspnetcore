@@ -10,19 +10,16 @@ using System.Threading.Tasks;
 
 namespace CompanyEmployees.Controllers
 {
-	//[ServiceFilter(typeof(LoggingFilterAttribute))]
 	[Route("api/companies")]
 	[ApiController]
 	public class CompaniesController : ControllerBase
 	{
 		private readonly ICompanyRepository _repository;
-		//private readonly ILoggerManager _logger;
 		private readonly IMapper _mapper;
 
 		public CompaniesController(ICompanyRepository repository, IMapper mapper)
 		{
 			_repository = repository;
-			//_logger = logger;
 			_mapper = mapper;
 		}
 
@@ -35,13 +32,10 @@ namespace CompanyEmployees.Controllers
 
 				var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
 
-				//_logger.LogInfo("All companies fetched from the database");
-
 				return Ok(companiesDto);
 			}
 			catch (Exception ex)
 			{
-				//_logger.LogError($"Exception occurred with a message: {ex.Message}");
 				return StatusCode(500, ex.Message);
 			}
 		}
@@ -52,7 +46,6 @@ namespace CompanyEmployees.Controllers
 			var company = await _repository.GetCompany(id);
 			if (company == null)
 			{
-				//_logger.LogInfo($"Company with id: {id} doesn't exist in the database.");
 				return NotFound();
 			}
 			else
@@ -66,8 +59,7 @@ namespace CompanyEmployees.Controllers
 		public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
 		{
 			if (company == null)
-			{
-				//_logger.LogError("CompanyForCreationDto object sent from client is null.");
+			{				
 				return BadRequest("CompanyForCreationDto object is null");
 			}
 

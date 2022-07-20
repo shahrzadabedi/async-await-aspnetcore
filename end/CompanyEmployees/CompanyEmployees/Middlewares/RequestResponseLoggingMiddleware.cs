@@ -23,7 +23,7 @@ namespace CompanyEmployees.Middlewares
         public async Task Invoke(HttpContext context)
         {
             //First, get the incoming request
-             await FormatRequest(context.Request);
+             await LogRequest(context.Request);
 
             //Copy a pointer to the original response body stream
             var originalBodyStream = context.Response.Body;
@@ -38,7 +38,7 @@ namespace CompanyEmployees.Middlewares
                 await _next(context);
 
                 //Format the response from the server
-                await FormatResponse(context.Response);
+                await LogResponse(context.Response);
 
                 //TODO: Save log to chosen datastore
 
@@ -47,7 +47,7 @@ namespace CompanyEmployees.Middlewares
             }
         }
 
-        private async Task FormatRequest(HttpRequest request)
+        private async Task LogRequest(HttpRequest request)
         {
             var body = request.Body;
 
@@ -65,11 +65,10 @@ namespace CompanyEmployees.Middlewares
 
             //..and finally, assign the read body back to the request body, which is allowed because of EnableRewind()
             request.Body = body;
-            logger.Debug($"{request.Scheme} {request.Host}{request.Path} {request.QueryString} {bodyAsText}");
-           // return $"{request.Scheme} {request.Host}{request.Path} {request.QueryString} {bodyAsText}";
+            logger.Debug($"{request.Scheme} {request.Host}{request.Path} {request.QueryString}  {bodyAsText}");       
         }
 
-        private async Task FormatResponse(HttpResponse response)
+        private async Task LogResponse(HttpResponse response)
         {
             //We need to read the response stream from the beginning...
             response.Body.Seek(0, SeekOrigin.Begin);
@@ -82,7 +81,7 @@ namespace CompanyEmployees.Middlewares
 
             //Return the string for the response, including the status code (e.g. 200, 404, 401, etc.)
             logger.Debug($"{response.StatusCode}: {text}");
-            //return $"{response.StatusCode}: {text}";
+            
         }
     }
 }

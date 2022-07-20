@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CompanyEmployees.Filters;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
@@ -11,19 +10,17 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace CompanyEmployees.Controllers
-{
-    //[ServiceFilter(typeof(LoggingFilterAttribute))]
+{    
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeRepository _repository;
-        private readonly ILoggerManager _logger;
+        private readonly IEmployeeRepository _repository;      
         private readonly IMapper _mapper;
-        public EmployeeController(IEmployeeRepository repository, ILoggerManager logger, IMapper mapper)
+        public EmployeeController(IEmployeeRepository repository            
+            , IMapper mapper)
         {
-            _repository = repository;
-            _logger = logger;
+            _repository = repository;         
             _mapper = mapper;
         }
 
@@ -35,14 +32,12 @@ namespace CompanyEmployees.Controllers
                 var companies = await _repository.GetAllEmployees();
 
                 var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(companies);
-
-                _logger.LogInfo("All employees fetched from the database");
+               
 
                 return Ok(employeesDto);
             }
             catch (Exception ex)
-            {
-                _logger.LogError($"Exception occurred with a message: {ex.Message}");
+            {               
                 return StatusCode(500, ex.Message);
             }
         }
@@ -52,8 +47,7 @@ namespace CompanyEmployees.Controllers
         {
             var company = await _repository.GetEmployee(id);
             if (company == null)
-            {
-                _logger.LogInfo($"Employee with id: {id} doesn't exist in the database.");
+            {             
                 return NotFound();
             }
             else
@@ -67,8 +61,7 @@ namespace CompanyEmployees.Controllers
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeForCreationDto employee)
         {
             if (employee == null)
-            {
-                _logger.LogError("EmployeeForCreationDto object sent from client is null.");
+            {               
                 return BadRequest("EmployeeForCreationDto object is null");
             }
 

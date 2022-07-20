@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CompanyEmployees.Filters;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;

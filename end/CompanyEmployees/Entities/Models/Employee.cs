@@ -16,12 +16,13 @@ namespace Entities.Models
         [Column("CompanyId")]
         [ForeignKey("Company")]
         public Guid CompanyId { get; set; }       
-        public Company Company { get; set; }
+        public virtual Company Company { get; set; }
         [Column("Name")]
         public string Name { get; set; }
         [Column("Position")]
         public string Position { get; set; }
-
+        
+        public virtual ICollection<Address> Addresses { get; set; }
 
     }
 }

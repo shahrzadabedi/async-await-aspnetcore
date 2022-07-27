@@ -31,9 +31,13 @@ namespace Repository
         }
 
 
-        public async Task<Employee> GetEmployee(Guid Id) =>
-            await _repoContext.Employees
-                .SingleOrDefaultAsync(c => c.Id.Equals(Id));
+        public async Task<Employee> GetEmployee(Guid Id)
+        {
+            var result = await _repoContext.Employees
+                   .SingleOrDefaultAsync(c => c.Id.Equals(Id));
+           
+            return result;
+        }
 
 
     }

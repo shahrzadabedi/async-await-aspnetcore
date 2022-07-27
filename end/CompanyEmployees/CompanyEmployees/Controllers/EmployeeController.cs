@@ -10,17 +10,17 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace CompanyEmployees.Controllers
-{    
+{
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeRepository _repository;      
+        private readonly IEmployeeRepository _repository;
         private readonly IMapper _mapper;
-        public EmployeeController(IEmployeeRepository repository            
+        public EmployeeController(IEmployeeRepository repository
             , IMapper mapper)
         {
-            _repository = repository;         
+            _repository = repository;
             _mapper = mapper;
         }
 
@@ -32,12 +32,12 @@ namespace CompanyEmployees.Controllers
                 var companies = await _repository.GetAllEmployees();
 
                 var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(companies);
-               
+
 
                 return Ok(employeesDto);
             }
             catch (Exception ex)
-            {               
+            {
                 return StatusCode(500, ex.Message);
             }
         }
@@ -45,15 +45,20 @@ namespace CompanyEmployees.Controllers
         [HttpGet("{id}", Name = "EmployeeById")]
         public async Task<IActionResult> GetEmployee(Guid id)
         {
-            var company = await _repository.GetEmployee(id);
-            if (company == null)
-            {             
+            var employee = await _repository.GetEmployee(id);
+            if (employee == null)
+            {
                 return NotFound();
             }
             else
             {
-                var companyDto = _mapper.Map<EmployeeDto>(company);
-                return Ok(companyDto);
+                var employeeDto = _mapper.Map<EmployeeDto>(employee);
+                //employeeDto.Addresses = new List<AddressDto>();
+                //foreach (var item in employee.Addresses)
+                //{
+                //    employeeDto.Addresses.Add(_mapper.Map<AddressDto>(item));
+                //}
+                return Ok(employeeDto);
             }
         }
 
@@ -61,7 +66,7 @@ namespace CompanyEmployees.Controllers
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeForCreationDto employee)
         {
             if (employee == null)
-            {               
+            {
                 return BadRequest("EmployeeForCreationDto object is null");
             }
 

@@ -13,5 +13,13 @@ namespace Entities.DataTransferObjects
         public Guid CompanyId { get; set; }
         public string Name { get; set; }
         public string Position { get; set; }
+        public List<AddressDto> Addresses { get; set; }
+    }
+
+    public class AddressDto
+    {
+        public int Id { get; set; }
+        public int PostalCode { get; set; }
+        public string Description { get; set; }
     }
 }

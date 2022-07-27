@@ -33,9 +33,7 @@ namespace CompanyEmployees
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env
-			
-			)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
@@ -56,6 +54,10 @@ namespace CompanyEmployees
 		
 			app.UseRouting();
 			app.UseAuthorization();
+			//app.Run(async context=>
+			//{
+			//	await context.Response.WriteAsync(Configuration["MyKey"]);
+			//});
 			app.UseMiddleware<RequestResponseLoggingMiddleware>();
 			app.UseEndpoints(endpoints =>
 			{
